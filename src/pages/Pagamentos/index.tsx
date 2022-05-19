@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+
 import { IPagamentos } from '../../types/Pagamentos';
 
 import Formulario from './Formulario';
@@ -7,7 +8,7 @@ import ListagemPagamentos from './ListagemPagamentos';
 
 import PaymentsService from 'services/PaymentsService';
 
-//import styles from './Pagamentos.module.scss';
+import { Payments } from './styles'
 
 export default function Pagamentos(){
     const [payments, setPayments] = useState<IPagamentos[]>([]);
@@ -15,8 +16,7 @@ export default function Pagamentos(){
     useEffect(() => {
       async function fetchData(){       
         const paymentService = new PaymentsService();
-        const response = paymentService.get();
-        console.log('Pagamentos', response);
+        const response = paymentService.get();        
         setPayments(response);
       }     
       
@@ -24,11 +24,9 @@ export default function Pagamentos(){
     }, [payments]);
 
   return(
-    <div>
-      <div>
-        <Formulario  setPayments={setPayments}/>
-      </div>
+    <Payments>
+      <Formulario setPayments={setPayments}/>
       <ListagemPagamentos pagamentos={payments}/>
-    </div>
+    </Payments>
   )
 }

@@ -1,4 +1,3 @@
-//import writeFileAtomic from 'write-file-atomic';
 
 import pagamentos from 'data/payments.json';
 
@@ -9,18 +8,18 @@ export default class PaymentsService {
   }
 
   async post(pagamento:any){   
- //  await this.readPayment(pagamento);
+    await this.readPayment(pagamento);
   }
 
-  // async readPayment(data:any){
-  //   try {
-  //     await writeFileAtomic('data/message.json', data, {chown:{uid:100,gid:50}});
-  //     console.log('It\'s saved!');
-  //   } catch (err) {
-  //     console.error(err);
-  //     process.exit(1);
-  //   }
-  // }
+  async readPayment(data:any){
+    // try {
+    //   await jsonfile.writeFile('data/message.json', data);
+    //   console.log('It\'s saved!');
+    // } catch (err) {
+    //   console.error(err);
+    //   process.exit(1);
+    // }
+  }
 }
 // [
 //   {
