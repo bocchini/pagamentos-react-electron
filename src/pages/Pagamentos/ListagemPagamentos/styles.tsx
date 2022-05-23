@@ -50,4 +50,5 @@ export const Button = styled.div`
     &:hover {
       background: ${shade(0.2, '#6e6e6e')};
     }
+  }
 `;

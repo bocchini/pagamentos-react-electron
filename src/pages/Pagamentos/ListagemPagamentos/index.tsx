@@ -6,16 +6,14 @@ import { Table, List, Button } from './styles';
 
 import { Colors } from 'styles/colors';
 
+import { helpersValue } from 'helpers/currency';
+import { helperDate } from 'helpers/date';
+
 type Props = {
   pagamentos: IPagamentos[]
 }
 
 function ListagemPagamentos({pagamentos}: Props){
-
-  const helpersValue = (value:number) =>{
-    const valueToString = String(value);
-    return valueToString.replace('.', ',')
-  }
 
   return(
     <div>
@@ -39,15 +37,15 @@ function ListagemPagamentos({pagamentos}: Props){
             {pagamentos.map(pagamento => (
               <tr key={pagamento.id}>
                 <td>{pagamento.numero_nota}</td>
-                <td>{pagamento.vencimento}</td>
+                <td>{helperDate(pagamento.vencimento)}</td>
                 <td>{pagamento.banco}</td>
                 <td>{pagamento.cliente}</td>
                 <td>R$ {helpersValue(pagamento.valor)}</td>
-                <td>{pagamento.data_pagamento}</td>
+                <td>{helperDate(pagamento.data_pagamento)}</td>
                 <td> 
                   <Button>
                     <button type="submit">Editar <RiEdit2Line size={16} color={Colors.green}/></button>
-                    <button type="submit">Apagar <RiDeleteBinLine size={16} color={Colors.red}/></button>    
+                    <button type="submit">Apagar {pagamento.id}<RiDeleteBinLine size={16} color={Colors.red}/></button>    
                   </Button>
                 </td>
               </tr>

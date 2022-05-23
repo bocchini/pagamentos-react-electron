@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "numero_nota": 153,
+    "vencimento": "02/03/2020",
+    "banco": "Itaú",
+    "cliente": "XP Investimentos",
+    "valor": 152.52,
+    "data_pagamento": ""
+  },
+  {
+    "id": 2,
+    "numero_nota": 1531,
+    "vencimento": "12/03/2020",
+    "banco": "Bradesco",
+    "cliente": "Banco ABC",
+    "valor": 52.52,
+    "data_pagamento": ""
+  },
+  {
+    "id": 3,
+    "numero_nota": 31,
+    "vencimento": "12/05/2022",
+    "banco": "Itaú",
+    "cliente": "ZURIC",
+    "valor": 5500,
+    "data_pagamento": "12/05/2022"
+  },
+  {
+    "numero_nota": "4",
+    "vencimento": "2022-02-02",
+    "banco": "XP",
+    "cliente": "XP",
+    "valor": "150.00",
+    "data_pagamento": "",
+    "id": "25a2b4de-df36-47c5-950b-a4460a06394e"
+  },
+  {
+    "numero_nota": "150",
+    "vencimento": "2020-05-02",
+    "banco": "Itaú",
+    "cliente": "Zuric",
+    "valor": "250.00",
+    "data_pagamento": "2022-05-12",
+    "id": "ccd23728-4f4b-47ea-826c-b46868ce7abb"
+  },
+  {
+    "numero_nota": "1233",
+    "vencimento": "2022-02-02",
+    "banco": "bRADESCO",
+    "cliente": "xp",
+    "valor": "255.55",
+    "data_pagamento": "",
+    "id": "27b5fafb-00e4-4ae9-ad51-4226c80f061e"
+  },
+  {
+    "numero_nota": "12",
+    "vencimento": "2022-02-12",
+    "banco": "XP",
+    "cliente": "Projet -C",
+    "valor": "158.59",
+    "data_pagamento": "",
+    "id": "1c1d5eb4-14f6-4993-bc85-1ed573dd7bd7"
+  }
+]

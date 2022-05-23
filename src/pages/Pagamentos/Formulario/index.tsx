@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-
 import { IPagamentos } from '../../../types/Pagamentos';
 import PaymentsService from 'services/PaymentsService';
 
@@ -10,7 +9,8 @@ import { Colors } from '../../../styles/colors'
 
 import { RiSave3Fill } from 'react-icons/ri';
 interface Props {
-  setPayments: React.Dispatch<React.SetStateAction<IPagamentos[]>>
+  setAlert: React.Dispatch<React.SetStateAction<boolean>>,
+  alert: boolean
 }
 
 type PaymentSubmitForm = {
@@ -24,28 +24,28 @@ type PaymentSubmitForm = {
 }
 
 
-function Formulario({setPayments }: Props) {
+function Formulario({setAlert, alert }: Props) {
 
+ 
   const {register, handleSubmit, formState: { errors }, reset} = useForm<PaymentSubmitForm>();
 
-   const onSubmit = (data: IPagamentos | any) => {
+   const onSubmit = async (data: IPagamentos | any) => {
     const paymentJson =  JSON.stringify(data, null, 2);
     const service = new PaymentsService();
-    service.post(paymentJson);
-    const payment = JSON.parse(paymentJson);
-
-    setPayments( oldPayment => [...oldPayment, payment]);
+    await service.post(paymentJson);
+    setAlert(true);
+  
     reset();
-  };
+   };
 
     return(
       <List>   
          <div>
-          <h2>Criar | Editar um depóstio</h2>
+          <h2>Criar | Editar um Pagamento</h2>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} >
           <Form>
-            <div><input hidden disabled type="number" {...register('id')} value={5}/></div>
+            <div><input disabled type="number" {...register('id')}/></div>
             <div>
               <label>Nota Nº:</label><input {...register('numero_nota', { required: true})} type="number"/>
               {errors.numero_nota && errors.numero_nota.type === "required" && (
