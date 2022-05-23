@@ -8,12 +8,26 @@ import { Colors } from 'styles/colors';
 
 import { helpersValue } from 'helpers/currency';
 import { helperDate } from 'helpers/date';
+import { PaymentForm } from 'types/PaymentForm';
+import PaymentsService from 'services/PaymentsService';
 
 type Props = {
-  pagamentos: IPagamentos[]
+  payments: IPagamentos[],
+  setPayment: React.Dispatch<React.SetStateAction<PaymentForm | undefined >>
 }
 
-function ListagemPagamentos({pagamentos}: Props){
+function ListagemPagamentos({payments, setPayment}: Props){
+
+  const handlerUpdate =async (e:React.SyntheticEvent) => {
+    e.preventDefault();
+    const id = ((e.target as HTMLInputElement).value);
+    if(id){
+      const service = new PaymentsService();
+      const paymentToUpdate = await service.getById(id);
+      console.log(paymentToUpdate);
+      setPayment(paymentToUpdate);
+    }
+  }
 
   return(
     <div>
@@ -34,18 +48,18 @@ function ListagemPagamentos({pagamentos}: Props){
             </tr>
           </thead>
           <tbody>
-            {pagamentos.map(pagamento => (
-              <tr key={pagamento.id}>
-                <td>{pagamento.numero_nota}</td>
-                <td>{helperDate(pagamento.vencimento)}</td>
-                <td>{pagamento.banco}</td>
-                <td>{pagamento.cliente}</td>
-                <td>R$ {helpersValue(pagamento.valor)}</td>
-                <td>{helperDate(pagamento.data_pagamento)}</td>
+            {payments.map(payment => (
+              <tr key={payment.id}>
+                <td>{payment.numero_nota}</td>
+                <td>{helperDate(payment.vencimento)}</td>
+                <td>{payment.banco}</td>
+                <td>{payment.cliente}</td>
+                <td>R$ {helpersValue(payment.valor)}</td>
+                <td>{helperDate(payment.data_pagamento)}</td>
                 <td> 
                   <Button>
-                    <button type="submit">Editar <RiEdit2Line size={16} color={Colors.green}/></button>
-                    <button type="submit">Apagar {pagamento.id}<RiDeleteBinLine size={16} color={Colors.red}/></button>    
+                    <button onClick={handlerUpdate} value={payment.id} type="submit">Editar <RiEdit2Line size={16} color={Colors.green}/></button>
+                    <button type="submit">Apagar {payment.id}<RiDeleteBinLine size={16} color={Colors.red}/></button>    
                   </Button>
                 </td>
               </tr>

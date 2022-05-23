@@ -10,10 +10,10 @@ class PaymentsController{
     }  
   };
 
-  static listarPorId = (req,res) =>{
+  static listarPorId = async (req,res) =>{
     try {
       const id = req.params.id;
-      const payment = Payments.findOne(id) 
+      const payment = await Payments.findOne(id) 
       res.status(200).send(payment);
     } catch (error) {
      
@@ -24,39 +24,34 @@ class PaymentsController{
   static save = async (req, res) => {
     try {
       const payment = req.body;
-      console.log(payment);
-      await Payments.save(payment);
-      res.status(201).send({message: 'Pagamento atualizado com sucesso'});
+      res.status(201).send(await Payments.save(payment));
     } catch (error) {
-      res.status(400).send({message: `Erro ao salvar, código: ${error}`});
+      res.status(400).send({message: `Erro ao salvar o pagamento, código: ${error}`});
     }
 
    
   }
 
+  static atualizar = async (req, res) => {
+    try {
+      const id = req.params.id;
+      
+      const paymentUpdated = await Payments.update(id, req.body);  
+      res.status(200).send(paymentUpdated);
+    } catch (error) {
+      res.status(500).send({message: `Erro ao cadastrar o pagamento, código: ${error}`});
+    }
+}
 
-  static atualizar = (req, res) => {
-    const id = req.params.id;
-
-    Payments.findByIdAndUpdate(id, {
-      $set: req.body
-    }, err =>{
-      if(err){
-        res.status(500).send({message: `Erro ao cadastrar o autor, código: ${err}`})
-      }
-      res.status(200).send({message: 'Autor atualizado com sucesso'});
-    });
-  }
-
-  static excluir = (req,res) => {
-    const id = req.params.id;
-
-    Payments.delete(id, err =>{
-      if(err){
-        res.status(500).send({ message: `Erro ao cadastrar o autor, código: ${err.message}`});
-      }
-      res.status(200).send({message: 'Autor removido com sucesso!'})
-    });
+  static excluir = async (req,res) => {
+    try {
+      const id = req.params.id;  
+      await Payments.delete(id)
+      res.status(200).send({message: 'Pagamento removido com sucesso!'});
+    } catch (error) {
+      res.status(500).send({ message: `Erro ao cadastrar o pagamento, código: ${error.message}`});
+      
+    }
   }
 }
 

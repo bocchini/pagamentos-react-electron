@@ -41,6 +41,7 @@ export const Button = styled.div`
   flex-flow: row wrap;
   justify-content: center;
   button {
+    margin: 0px 5px 0 5px;
     font-size: 1rem;   
     align-items:center;
     display:flex;  

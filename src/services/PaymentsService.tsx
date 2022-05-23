@@ -12,6 +12,11 @@ export default class PaymentsService {
         'Content-Type': 'application/json'
       }
     }); 
-    return response;
+    return response.data;
+  }
+
+  async getById(id:string){
+    const response = await api.get(`payments/${id}`);    
+    return response.data;
   }
 }

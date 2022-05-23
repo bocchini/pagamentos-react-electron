@@ -1,5 +1,5 @@
 export interface IPagamentos{
-  id : number,
+  id : string,
   numero_nota: number,
   vencimento: string,
   banco: string,
