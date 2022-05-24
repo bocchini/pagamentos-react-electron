@@ -1,31 +1,43 @@
 import { RiEdit2Line, RiDeleteBinLine } from 'react-icons/ri';
 
-import { IPagamentos } from '../../../types/Pagamentos';
-
 import { Table, List, Button } from './styles';
-
 import { Colors } from 'styles/colors';
 
+import PaymentsService from 'services/PaymentsService';
+
+import { IPagamentos } from '../../../types/Pagamentos';
+import { PaymentForm } from 'types/PaymentForm';
 import { helpersValue } from 'helpers/currency';
 import { helperDate } from 'helpers/date';
-import { PaymentForm } from 'types/PaymentForm';
-import PaymentsService from 'services/PaymentsService';
+import { Alert } from 'types/Alert';
 
 type Props = {
   payments: IPagamentos[],
-  setPayment: React.Dispatch<React.SetStateAction<PaymentForm | undefined >>
+  setPayment: React.Dispatch<React.SetStateAction<PaymentForm | undefined >>,
+  setAlert: React.Dispatch<React.SetStateAction<Alert>>;
 }
 
-function ListagemPagamentos({payments, setPayment}: Props){
+function ListagemPagamentos({payments, setPayment, setAlert}: Props){
 
-  const handlerUpdate =async (e:React.SyntheticEvent) => {
+  const handlerUpdate = async (e:React.SyntheticEvent) => {
     e.preventDefault();
     const id = ((e.target as HTMLInputElement).value);
     if(id){
       const service = new PaymentsService();
       const paymentToUpdate = await service.getById(id);
-      console.log(paymentToUpdate);
       setPayment(paymentToUpdate);
+    }
+  }
+
+  const handlerDelete = async (e:React.SyntheticEvent) =>{
+    e.preventDefault();
+    const id =((e.target as HTMLInputElement).value);
+    if (id){
+      const service = new PaymentsService();
+      const response = await service.delete(id);
+      if(response === 200){
+        setAlert({showMessage: true, message: 'Pagamento apagado com sucesso!'})
+      }
     }
   }
 
@@ -56,10 +68,10 @@ function ListagemPagamentos({payments, setPayment}: Props){
                 <td>{payment.cliente}</td>
                 <td>R$ {helpersValue(payment.valor)}</td>
                 <td>{helperDate(payment.data_pagamento)}</td>
-                <td> 
+                <td>
                   <Button>
                     <button onClick={handlerUpdate} value={payment.id} type="submit">Editar <RiEdit2Line size={16} color={Colors.green}/></button>
-                    <button type="submit">Apagar {payment.id}<RiDeleteBinLine size={16} color={Colors.red}/></button>    
+                    <button onClick={handlerDelete} value={payment.id} type="submit">Apagar <RiDeleteBinLine size={16} color={Colors.red}/></button>
                   </Button>
                 </td>
               </tr>

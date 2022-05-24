@@ -1,9 +1,12 @@
+import { About } from './styles'
 export default function Sobre(){
   return(
     <>
-      <span id="node-version"></span><br/>
-      <span id="chrome-version"></span><br />
-      <span id="electron-version"></span>
+    <About>
+        <p>Node: <span id="node-version"></span></p>
+        <p>Chrome: <span id="chrome-version"></span></p>
+        <p>Electron: <span id="electron-version"></span></p>
+      </About>
     </>
   )
 }
