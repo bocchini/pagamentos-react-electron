@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiSave3Fill } from 'react-icons/ri';
 
@@ -15,126 +15,142 @@ import { Alert } from 'types/Alert';
 interface Props {
   setAlert: React.Dispatch<React.SetStateAction<Alert>>;
   payment: PaymentForm | undefined;
-  setPayment: React.Dispatch<React.SetStateAction<PaymentForm | undefined>>;
+  setPayment: React.Dispatch<React.SetStateAction<PaymentForm>>;
   setPayments: React.Dispatch<React.SetStateAction<IPagamentos[]>>;
 }
 
 function Formulario({ setAlert, payment, setPayment, setPayments }: Props) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<PaymentForm>();
 
-
-
-  const onSubmit = async (data: IPagamentos | any) => {
-    const paymentJson = JSON.stringify(data, null, 2);
+  const onSubmit = async (e:React.SyntheticEvent) => {
+    e.preventDefault();
     const service = new PaymentsService();
-    console.log(payment);
-    // if(paymentJson.'id'){
-    //   //const new = await service.
-    // }
-    const newPayment = await service.post(paymentJson);
-    setAlert({showMessage: true, message: 'Pagamento salvo com sucesso!'});
-    setPayments((oldPayments) => [...oldPayments, newPayment]);
-    reset();
+    console.log(!!payment?.id)
+    if(!!payment?.id){
+      const updatePayment = await service.update(payment.id, payment)
+      console.log(updatePayment);
+      if(updatePayment){
+        setAlert({showMessage: true, message: 'Pagamento salvo com sucesso!'});
+        resetPayment();
+        setPayments(await service.get());
+        setTimeout(() => {
+              setAlert({
+                showMessage: false,
+                message: ''
+              });
+            }, 2500);
+            return;
+      }
+      return;
+    }
+      const newPayment = await service.post(payment);
+      setPayments((oldPayments) => [...oldPayments, newPayment]);
+      setAlert({showMessage: true, message: 'Pagamento salvo com sucesso!'});
+      resetPayment();
+      setTimeout(() => {
+            setAlert({
+              showMessage: false,
+              message: ''
+            });
+          }, 2500);
+
   };
+
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setPayment( {...payment,[event.currentTarget.name]: event.currentTarget.value});
+
+  }
+
+  const resetPayment = () =>{
+    setPayment({
+      id: '',
+      numero_nota: 0,
+      vencimento: '',
+      banco: '',
+      cliente: '',
+      valor: 0,
+      data_pagamento: ''
+    });
+  }
 
   const handleReset = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setPayment({
-      id: '',
-      banco: '',
-      cliente: '',
-      data_pagamento: undefined,
-      vencimento: '',
-      numero_nota: undefined,
-      valor: undefined,
-    });
-    reset();
+    resetPayment();
   };
 
   return (
     <List>
       <div>
-        <h2>Criar | Editar um Pagamento</h2>
+        <h2>Criar | Editar um Pagamento90</h2>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <Form>
           <div>
-            <input
-              value={payment?.id}
+            <input hidden
               disabled
               type="text"
-              {...register('id')}
+              value={payment?.id}
+              name="id"
             />
           </div>
           <div>
             <label>Nota Nº:</label>
             <input
-              value={payment?.numero_nota}
-              {...register('numero_nota', { required: true })}
+              name='numero_nota'
               type="number"
+              value={payment?.numero_nota}
+              onChange={handleChange}
+              min="0"
             />
-            {errors.numero_nota && errors.numero_nota.type === 'required' && (
-              <div className="error">Digite o número da nota.</div>
-            )}
+
           </div>
           <div>
             <label>Vencimento:</label>
             <input
+             name='vencimento'
               value={payment?.vencimento}
-              {...register('vencimento', { required: true })}
               type="date"
+              onChange={handleChange}
               required
             />
-            {errors.vencimento && errors.vencimento.type === 'required' && (
-              <div className="error">Digite o número da nota.</div>
-            )}
           </div>
           <div>
             <label>Banco:</label>
             <input
+              name='banco'
               value={payment?.banco}
-              {...register('banco')}
+              onChange={handleChange}
               type="text"
             />
-            {errors.banco && errors.banco.type === 'required' && (
-              <div className="error">Digite o número da nota.</div>
-            )}
+
           </div>
           <div>
             <label>Cliente:</label>
             <input
+              name='cliente'
               value={payment?.cliente}
-              {...register('cliente', { required: true })}
               type="text"
+              onChange={handleChange}
               required
             />
-            {errors.cliente && errors.cliente.type === 'required' && (
-              <div className="error">Digite o número da nota.</div>
-            )}
           </div>
           <div>
             <label>Valor R$: </label>
             <input
+              name="valor"
               value={payment?.valor}
-              {...register('valor')}
+              onChange={handleChange}
               type="number"
               min="0"
               step=".01"
             />
-            {errors.valor && errors.valor.type === 'required' && (
-              <div className="error">Digite o número da nota.</div>
-            )}
+
           </div>
           <div>
             <label>Data Pgto:</label>
             <input
               value={payment?.data_pagamento}
-              {...register('data_pagamento')}
+              name="data_pagamento"
+              onChange={handleChange}
               type="date"
             />
           </div>

@@ -13,11 +13,12 @@ import { Alert } from 'types/Alert';
 
 type Props = {
   payments: IPagamentos[],
-  setPayment: React.Dispatch<React.SetStateAction<PaymentForm | undefined >>,
-  setAlert: React.Dispatch<React.SetStateAction<Alert>>;
+  setPayment: React.Dispatch<React.SetStateAction<PaymentForm>>,
+  setAlert: React.Dispatch<React.SetStateAction<Alert>>,
+  setPayments: React.Dispatch<React.SetStateAction<IPagamentos[]>>;
 }
 
-function ListagemPagamentos({payments, setPayment, setAlert}: Props){
+function ListagemPagamentos({payments, setPayment, setPayments, setAlert}: Props){
 
   const handlerUpdate = async (e:React.SyntheticEvent) => {
     e.preventDefault();
@@ -32,11 +33,23 @@ function ListagemPagamentos({payments, setPayment, setAlert}: Props){
   const handlerDelete = async (e:React.SyntheticEvent) =>{
     e.preventDefault();
     const id =((e.target as HTMLInputElement).value);
+    const confirm = window.confirm('Deseja apagar este pagamento?');
+    if (!confirm) return;
+
+    console.log(id);
     if (id){
       const service = new PaymentsService();
       const response = await service.delete(id);
       if(response === 200){
+        const payments = await service.get();
+        setPayments(payments);
         setAlert({showMessage: true, message: 'Pagamento apagado com sucesso!'})
+        setTimeout(() => {
+          setAlert({
+            showMessage: false,
+            message: ''
+          });
+        }, 2500);
       }
     }
   }

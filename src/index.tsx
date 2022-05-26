@@ -4,13 +4,11 @@ import ReactDOM from 'react-dom';
 import 'normalize.css';
 import './index.css';
 
-import Pagamentos from './pages/Pagamentos';
-import Sobre from 'pages/Sobre';
+import Home from 'pages/Home';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Pagamentos/>
-    <Sobre/>
+    <Home/>
   </React.StrictMode>,
   document.getElementById('root')
 );

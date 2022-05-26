@@ -11,7 +11,15 @@ import PaymentsService from 'services/PaymentsService';
 import { Payments, H3 } from './styles';
 import { PaymentForm } from 'types/PaymentForm';
 
-
+const valuesInitial = {
+  id: '',
+  numero_nota: 0,
+  vencimento: '',
+  banco: '',
+  cliente: '',
+  valor: 0,
+  data_pagamento: ''
+}
 
 export default function Pagamentos(){
     const [payments, setPayments] = useState<IPagamentos[]>([]);
@@ -19,7 +27,8 @@ export default function Pagamentos(){
       showMessage: false,
       message: ''
     });
-    const [ payment, setPayment ] = useState<PaymentForm>();
+    const [ payment, setPayment ] = useState<PaymentForm>(valuesInitial);
+    const [paymentId, setPaymentId] = useState<String>('');
 
     useEffect(() => {
       async function fetchData(){
@@ -27,16 +36,7 @@ export default function Pagamentos(){
         const response = await paymentService.get();
         setPayments(response);
       }
-      // if(alert) {
-      //   setTimeout(() => {
-      //     setAlert({
-      //       showMessage: false,
-      //       message: ''
-      //     });
-      //   }, 2500)
-      // };
       fetchData();
-      console.log('Passou aqui');
     }, []);
 
   return(
@@ -45,7 +45,7 @@ export default function Pagamentos(){
         {alert.showMessage && <H3>{alert.message}</H3>}
       </div>
       <Formulario setPayment={setPayment} setPayments={setPayments} payment={payment} setAlert={setAlert}/>
-      <ListagemPagamentos payments={payments} setPayment={setPayment} setAlert={setAlert}/>
+      <ListagemPagamentos payments={payments} setPayments={setPayments} setPayment={setPayment} setAlert={setAlert}/>
     </Payments>
   )
 }
