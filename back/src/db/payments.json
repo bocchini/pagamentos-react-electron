@@ -1,0 +1,47 @@
+[
+  {
+    "numero_nota": "4",
+    "vencimento": "2022-05-24",
+    "banco": "Teste",
+    "cliente": "XP Investimentos",
+    "valor": "123",
+    "data_pagamento": "",
+    "id": "b3a780f1-6dc9-4f89-a428-74e3af0e9ac4"
+  },
+  {
+    "numero_nota": "4",
+    "vencimento": "2022-05-24",
+    "banco": "Teste 3",
+    "cliente": "XP Investimentos",
+    "valor": "123",
+    "data_pagamento": "",
+    "id": "f2c7b403-3cde-47ef-a4e1-5c70e1a23e43"
+  },
+  {
+    "id": "1bc7f965-615b-4810-91f4-83bdd03dc129",
+    "numero_nota": "125",
+    "vencimento": "2022-05-24",
+    "banco": "Teste 2",
+    "cliente": "XP Investimentos",
+    "valor": "125",
+    "data_pagamento": ""
+  },
+  {
+    "numero_nota": "4",
+    "vencimento": "2022-05-24",
+    "banco": "Teste Novo",
+    "cliente": "XP Investimentos Novo",
+    "valor": "123",
+    "data_pagamento": "",
+    "id": "19aadc67-db46-4ae2-8cf1-e7462d677710"
+  },
+  {
+    "id": "59cbbbcc-0ffd-4473-b957-c2ac5ebe6533",
+    "numero_nota": "125",
+    "vencimento": "1988-02-19",
+    "banco": "XP",
+    "cliente": "Anga",
+    "valor": "152.25",
+    "data_pagamento": "2022-05-25"
+  }
+]
