@@ -23,12 +23,11 @@ const valuesInitial = {
 
 export default function Pagamentos(){
     const [payments, setPayments] = useState<IPagamentos[]>([]);
+    const [ payment, setPayment ] = useState<PaymentForm>(valuesInitial);
     const [alert, setAlert] = useState({
       showMessage: false,
       message: ''
     });
-    const [ payment, setPayment ] = useState<PaymentForm>(valuesInitial);
-    const [paymentId, setPaymentId] = useState<String>('');
 
     useEffect(() => {
       async function fetchData(){

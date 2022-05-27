@@ -1,12 +1,12 @@
-import React, { SetStateAction } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+
 import { RiSave3Fill } from 'react-icons/ri';
 
-import { IPagamentos } from '../../../types/Pagamentos';
 
 import { Form, Button, List } from './styles';
 import { Colors } from '../../../styles/colors';
 
+import { IPagamentos } from '../../../types/Pagamentos';
 import PaymentsService from 'services/PaymentsService';
 import { PaymentForm } from 'types/PaymentForm';
 
