@@ -24,7 +24,7 @@ function Formulario({ setAlert, payment, setPayment, setPayments }: Props) {
   const onSubmit = async (e:React.SyntheticEvent) => {
     e.preventDefault();
     const service = new PaymentsService();
-    console.log(!!payment?.id)
+
     if(!!payment?.id){
       const updatePayment = await service.update(payment.id, payment)
       console.log(updatePayment);
@@ -80,7 +80,7 @@ function Formulario({ setAlert, payment, setPayment, setPayments }: Props) {
   return (
     <List>
       <div>
-        <h2>Criar | Editar um Pagamento90</h2>
+        <h2>Criar | Editar um Pagamento</h2>
       </div>
       <form onSubmit={onSubmit}>
         <Form>
@@ -157,8 +157,8 @@ function Formulario({ setAlert, payment, setPayment, setPayments }: Props) {
         </Form>
         <Button>
           <button type="submit">
-            Salvar
             <RiSave3Fill size={20} color={Colors.green2} />
+            Salvar
           </button>
           <button type="reset" onClick={handleReset}>
             Limpar formulário

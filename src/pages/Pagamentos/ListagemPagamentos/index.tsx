@@ -83,8 +83,14 @@ function ListagemPagamentos({payments, setPayment, setPayments, setAlert}: Props
                 <td>{helperDate(payment.data_pagamento)}</td>
                 <td>
                   <Button>
-                    <button onClick={handlerUpdate} value={payment.id} type="submit">Editar <RiEdit2Line size={16} color={Colors.green}/></button>
-                    <button onClick={handlerDelete} value={payment.id} type="submit">Apagar <RiDeleteBinLine size={16} color={Colors.red}/></button>
+                    <button onClick={handlerUpdate} value={payment.id} type="submit">
+                      <RiEdit2Line size={16} color={Colors.green}/>
+                      Editar
+                    </button>
+                    <button onClick={handlerDelete} value={payment.id} type="submit">
+                      <RiDeleteBinLine size={16} color={Colors.red}/>
+                      Apagar
+                    </button>
                   </Button>
                 </td>
               </tr>
